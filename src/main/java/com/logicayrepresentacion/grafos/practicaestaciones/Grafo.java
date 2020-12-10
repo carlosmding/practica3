@@ -135,6 +135,47 @@ public class Grafo {
         return menoresCostos;
     }
 
+    public String[][] rutasCortas(Costo[][] menoresCostos) {
+        String[][] caminos = new String[menoresCostos.length][menoresCostos.length];
+        int n = menoresCostos.length;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                caminos[i][j] = "" + i;
+            }
+        }
+
+        for (int k = 0; k < n; k++) {
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    if (i != j) {
+                        Costo aux = Costo.sumar(menoresCostos[i][k], menoresCostos[k][j]);
+                        switch (aux.compareTo(menoresCostos[i][j])) {
+                            case 1:
+                                break;
+                            case -1:
+
+                            case 0:
+                                //System.out.println("acá");
+                                if (i != j) {
+                                    caminos[i][j] += ";" + k;
+                                    break;
+                                }
+                        }
+                    }
+                }
+            }
+
+        }
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                caminos[i][j] = ";" + j;
+            }
+        }
+
+        return caminos;
+    }
+
     public int[][] enviarMensaje(Costo[][] menores, int estInicio, int lados) {
         int[] menoresXEstacion = new int[menores.length];
         int[] estEnviadas = new int[menores.length];
@@ -171,18 +212,11 @@ public class Grafo {
                     for (int j = 0; j < menores.length; j++) {
                         adyEstacion[j] = matrizAdy[i][j];
                     }
-
+                    int menorCosto=1000;
                     for (int k = 0; k < menores.length; k++) {
                         if (adyEstacion[k] == 1) {
-                            if (estEnviadas[k] == 0) {
-                                int menorCosto;
-                                if (k == 0) {
-                                    menorCosto = 1000;
-                                } else {
-                                    menorCosto = menores[0][k].getValor();
-                                }
-
-                                for (int j = 1; j < menores.length; j++) {
+                            if (estEnviadas[k] == 0) { 
+                                for (int j = 0; j < menores.length; j++) {
                                     if (menores[j][k].getValor() < menorCosto && k != j) {
                                         menorCosto = menores[j][k].getValor();
                                     }
@@ -221,42 +255,43 @@ public class Grafo {
         if (matrizAdy[vf][vi] != 1) {
             int[] visitados = new int[menores.length];
             int[] adyEstacion = new int[menores.length];
-            camino += vf;
+            camino += vi;
             int sigEstacion = -1;
 
             visitados[vi] = -1;
             visitados[vf] = -1;
-
+            int menorCosto = 1000;
             for (int i = 0; i < visitados.length; i++) {
-                int menorCosto = 1000;
-                if (!menores[i][vf].isInfinito() && menores[i][vf].getValor() < menorCosto) {
-                    menorCosto = menores[i][vf].getValor();
+                if (!menores[i][vi].isInfinito() && menores[i][vi].getValor() < menorCosto) {
+                    menorCosto = menores[i][vi].getValor();
                     sigEstacion = i;
-                }   
+                }
             }
             camino += ";" + sigEstacion;
             visitados[sigEstacion] = 1;
-            
+
             boolean finaliza = mensajeTransmitido(visitados);
             while (finaliza) {
-                if (matrizAdy[sigEstacion][vi]!=1) {
+                if (matrizAdy[sigEstacion][vf] != 1) {
+
+                    int menorCosto2 = 100;
                     for (int i = 0; i < visitados.length; i++) {
-                        int menorCosto = 100; 
-                        if (!menores[i][sigEstacion].isInfinito() && menores[i][sigEstacion].getValor() < menorCosto && visitados[sigEstacion]==0) {
-                            menorCosto = menores[i][vf].getValor();
+                        if (!menores[i][sigEstacion].isInfinito() && menores[i][sigEstacion].getValor() < menorCosto2 && visitados[i] == 0 && i != vi) {
+                            menorCosto2 = menores[i][sigEstacion].getValor();
                             sigEstacion = i;
-                        }   
+                        }
                     }
                     visitados[sigEstacion] = 1;
-                    camino += ";" + sigEstacion;   
-                }else{
-                    camino+=";" + sigEstacion;
+                    camino += ";" + sigEstacion;
+
+                } else {
+                    camino += ";" + vf;
                     break;
                 }
                 finaliza = mensajeTransmitido(visitados);
-            }   
+            }
         } else {
-            camino += ";" + vi;
+            camino += vf + ";" + vi;
         }
         return camino;
     }

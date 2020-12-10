@@ -10,8 +10,10 @@ import com.logicayrepresentacion.grafos.practicaestaciones.Costo;
 import com.logicayrepresentacion.grafos.practicaestaciones.DatosEstacion;
 import com.logicayrepresentacion.grafos.practicaestaciones.Estacion;
 import com.logicayrepresentacion.grafos.practicaestaciones.Grafo;
+import com.logicayrepresentacion.grafos.practicaestaciones.Ruta;
 import static com.logicayrepresentacion.grafos.practicaestaciones.vista.Lienzo.DIAMETRO;
 import java.awt.Graphics;
+import java.awt.HeadlessException;
 import java.awt.geom.Ellipse2D;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -328,6 +330,9 @@ public class App extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "La estacion "+datosEstacion.getEstaciones()[e1].getNombre()+" envia mensaje a la estacion "+datosEstacion.getEstaciones()[e2].getNombre());
             }
 
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(null, "Ingrese una estacion valida para enviar el mensaje");
+            estacionInicio.setText("");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ingrese una estacion valida para enviar el mensaje");
             estacionInicio.setText("");
@@ -345,11 +350,16 @@ public class App extends javax.swing.JFrame {
 
     private void RutasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RutasActionPerformed
         // TODO add your handling code here:
-        /*Costo[][] matriz = datosEstacion.getGrafo().convertirMatriz();
+        Costo[][] matriz = datosEstacion.getGrafo().convertirMatriz();
         Costo[][] menores = datosEstacion.getGrafo().menoresCostos(matriz);
-
-        String camino = datosEstacion.getGrafo().rutaCorta(menores, 0, 3);
-        System.out.println(camino);*/
+        
+        String [][] rutas = datosEstacion.getGrafo().rutasCortas(menores);
+        
+        
+        // Al traer la matriz, ya estan todas la rutas posibles, se podria hacer una sola busqueda como atributo, para que no
+        //lo haga cada vez que se calcule algo y luego validar si son adyacentes para pintar la ruta o solo una arista.
+        
+        
     }//GEN-LAST:event_RutasActionPerformed
 
     /**

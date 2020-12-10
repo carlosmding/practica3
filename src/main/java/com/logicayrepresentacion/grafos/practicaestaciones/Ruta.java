@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author 57300
  */
-class Ruta {
+public class Ruta {
 
     ArrayList<Estacion> ruta = new ArrayList<>();
     int distancia = 0;
