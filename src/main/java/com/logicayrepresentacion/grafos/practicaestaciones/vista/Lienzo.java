@@ -12,7 +12,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.QuadCurve2D;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -50,6 +50,7 @@ public class Lienzo extends javax.swing.JPanel {
         }
 
         int[][] matrizAdy = datosEstacion.getGrafo().getMatrizAdy();
+        int[][] matrizCostos = datosEstacion.getGrafo().getMatrizCostos();
         for (int i = 0; i < matrizAdy.length; i++) {
             for (int j = 0; j < matrizAdy.length; j++) {
                 int ady = matrizAdy[i][j];
@@ -61,6 +62,11 @@ public class Lienzo extends javax.swing.JPanel {
                     double x2 = estacion2.getForma().getCenterX();
                     double y2 = estacion2.getForma().getCenterY();
                     g2.drawLine((int) x1, (int) y1, (int) x2, (int) y2);
+                    String costo = String.valueOf(matrizCostos[i][j]);
+                    int xmed, ymed;
+                    xmed = ((int) x1 + (int) x2)/2;
+                    ymed = ((int) y1 + (int) y2)/2;
+                    g2.drawString(costo,xmed -10 ,ymed-20);
                     g2.drawString(estacion1.getNombre(), (int) x1 - 20, (int) y1 - 20);
 
                 }

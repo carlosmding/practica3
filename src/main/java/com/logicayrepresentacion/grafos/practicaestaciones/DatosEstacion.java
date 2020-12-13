@@ -74,6 +74,12 @@ public class DatosEstacion {
     public Grafo getGrafo() {
         return grafo;
     }
+
+    public ArbolAVL<Estacion> getArbolAVL() {
+        return arbolAVL;
+    }
+    
+    
     
     
 

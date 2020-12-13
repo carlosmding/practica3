@@ -5,6 +5,8 @@
  */
 package com.logicayrepresentacion.grafos.practicaestaciones;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author 57300
@@ -102,7 +104,7 @@ public class Grafo {
         return matriz;
     }
 
-    public Costo[][] menoresCostos(Costo[][] costos) {
+    public Costo[][] menoresCostos(Costo[][] costos) { // Algoritmo de Floyd
         int n = costos.length;
         Costo[][] menoresCostos = new Costo[n][n];
         for (int i = 0; i < n; i++) {
@@ -120,7 +122,6 @@ public class Grafo {
                             case -1:
 
                             case 0:
-                                //System.out.println("acá");
                                 if (i != j) {
                                     menoresCostos[i][j] = aux;
                                     break;
@@ -135,7 +136,9 @@ public class Grafo {
         return menoresCostos;
     }
 
-    public String[][] rutasCortas(Costo[][] menoresCostos) {
+    //Usando el algoritmo de Floyd al encontrar un valor menor, significa que debe pasar por la estacion k.
+    
+    public String[][] rutasCortas(Costo[][] menoresCostos) { 
         String[][] caminos = new String[menoresCostos.length][menoresCostos.length];
         int n = menoresCostos.length;
 
@@ -169,73 +172,105 @@ public class Grafo {
         }
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                caminos[i][j] = ";" + j;
+                caminos[i][j] += ";" + j;
             }
         }
 
         return caminos;
     }
 
-    public int[][] enviarMensaje(Costo[][] menores, int estInicio, int lados) {
-        int[] menoresXEstacion = new int[menores.length];
-        int[] estEnviadas = new int[menores.length];
-        int[] adyEstacion = new int[menores.length];
-        int[][] ruta = new int[lados][2];
-        int contadorRutas = 0;
+    public int[][] generarRuta(String rutaSeleccionada, DatosEstacion datos) {
+        String[] estaciones = rutaSeleccionada.split(";");
+        int[][] ruta = new int[estaciones.length - 1][2];
+        int[] enlazados = new int[matrizAdy.length];
+        String camino = "Ruta mas corta ";
+
+        for (int i = 0; i < matrizAdy.length; i++) {
+            enlazados[i] = 1;
+        }
+
+        for (int i = 0; i < matrizAdy.length; i++) {
+            for (int j = 0; j < matrizAdy.length; j++) {
+                if (j < estaciones.length && i == Integer.parseInt(estaciones[j])) {
+                    enlazados[i] = 0;
+                }
+            }
+        }
+
+        enlazados[Integer.parseInt(estaciones[0])] = 1;
+        enlazados[Integer.parseInt(estaciones[estaciones.length - 1])] = 1;
+
+        boolean todosEnlazados = enlaces(enlazados);
+        if (!todosEnlazados) {
+            ruta[0][0] = Integer.parseInt(estaciones[0]);
+            ruta[0][1] = Integer.parseInt(estaciones[1]);
+            camino += ">> " + datos.getEstaciones()[Integer.parseInt(estaciones[0])].getNombre();
+            camino += ">> " + datos.getEstaciones()[Integer.parseInt(estaciones[1])].getNombre();
+        } else {
+            int ultimo = Integer.parseInt(estaciones[0]);
+            camino += ">> " + datos.getEstaciones()[Integer.parseInt(estaciones[0])].getNombre();
+            int contador = 0;
+            while (todosEnlazados) {
+                for (int i = 1; i < estaciones.length - 1; i++) {
+                    if (matrizAdy[ultimo][Integer.parseInt(estaciones[i])] == 1 && enlazados[Integer.parseInt(estaciones[i])] == 0) {
+                        ruta[contador][0] = ultimo;
+                        ruta[contador][1] = Integer.parseInt(estaciones[i]);
+                        camino += ">> " + datos.getEstaciones()[Integer.parseInt(estaciones[i])].getNombre();
+                        enlazados[Integer.parseInt(estaciones[i])] = 1;
+                        ultimo = Integer.parseInt(estaciones[i]);
+                        contador++;
+                    }
+                }
+                todosEnlazados = enlaces(enlazados);
+            }
+            ruta[contador][0] = ultimo;
+            ruta[contador][1] = Integer.parseInt(estaciones[ruta.length]);
+            camino += ">> " + datos.getEstaciones()[Integer.parseInt(estaciones[ruta.length])].getNombre();
+        }
+
+        JOptionPane.showMessageDialog(null, camino);
+
+        return ruta;
+
+    }
+
+    public int[][] enviarMensaje(String[][] rutas, Costo[][] menores, int estInicio, int lados) {
+        int[] estEnviadas = new int[matrizAdy.length];
+        int[][] ruta = new int[lados-1][2];
+        int contador = 0;
 
         estEnviadas[estInicio] = -1;
 
-        //menores de estacion de inicio del mensaje
-        for (int i = 0; i < menores.length; i++) {
-            menoresXEstacion[i] = menores[estInicio][i].getValor();
-            adyEstacion[i] = matrizAdy[estInicio][i];
-        }
-
-        //Enviados desde el inicio
-        for (int i = 0; i < adyEstacion.length; i++) {
-            if (adyEstacion[i] == 1) {
-                if (menoresXEstacion[i] == matrizCostos[estInicio][i] && estInicio != i && estEnviadas[i] == 0) {
-                    System.out.println("La estacion " + estInicio + " envia mensaje a la estacion " + i);
-                    ruta[contadorRutas][0] = estInicio;
-                    ruta[contadorRutas][1] = i;
-                    contadorRutas++;
-                    estEnviadas[i] = 1;
-                }
+        //Enviados desde el inicio, reglas de los triangulos
+        for (int i = 0; i < matrizAdy.length; i++) { 
+            if (matrizAdy[estInicio][i] == 1) {
+                ruta[contador][0] = estInicio;
+                ruta[contador][1] = i;
+                estEnviadas[i] = 1;
+                contador++;
             }
         }
 
         //Enviar desde estaciones que ya tiene mensaje
         boolean finaliza = mensajeTransmitido(estEnviadas);
         while (finaliza) {
-            for (int i = 0; i < menores.length; i++) {
-                if (estEnviadas[i] == 1) {
+            for (int i = 0; i < matrizAdy.length; i++) {
+                if (estEnviadas[i] == 0) {
                     for (int j = 0; j < menores.length; j++) {
-                        adyEstacion[j] = matrizAdy[i][j];
-                    }
-                    int menorCosto=1000;
-                    for (int k = 0; k < menores.length; k++) {
-                        if (adyEstacion[k] == 1) {
-                            if (estEnviadas[k] == 0) { 
-                                for (int j = 0; j < menores.length; j++) {
-                                    if (menores[j][k].getValor() < menorCosto && k != j) {
-                                        menorCosto = menores[j][k].getValor();
-                                    }
-                                }
-                                if (menorCosto == matrizCostos[i][k]) {
-                                    System.out.println("La estacion " + i + " envia mensaje a la estacion " + k);
-                                    ruta[contadorRutas][0] = i;
-                                    ruta[contadorRutas][1] = k;
-                                    contadorRutas++;
-                                    estEnviadas[k] = 1;
-                                }
+                        if (matrizAdy[i][j] == 1 && estEnviadas[j] == 1) {
+                            if (matrizCostos[i][j] == menores[i][j].getValor() && estEnviadas[i]==0) {
+                                ruta[contador][0] = j;
+                                ruta[contador][1] = i;
+                                estEnviadas[i]=1;
+                                contador++;
                             }
                         }
                     }
+
                 }
             }
             finaliza = mensajeTransmitido(estEnviadas);
         }
-
         return ruta;
     }
 
@@ -249,6 +284,17 @@ public class Grafo {
         return mensajePendiente;
     }
 
+    public boolean enlaces(int[] enlace) {
+        boolean completo = false;
+        for (int i = 0; i < enlace.length; i++) {
+            if (enlace[i] == 0) {
+                completo = true;
+            }
+        }
+        return completo;
+    }
+
+    /*
     public String rutaCorta(Costo[][] menores, int vi, int vf) {
         //Ruta camino = new Ruta();
         String camino = "";
@@ -295,5 +341,5 @@ public class Grafo {
         }
         return camino;
     }
-
+*/
 }

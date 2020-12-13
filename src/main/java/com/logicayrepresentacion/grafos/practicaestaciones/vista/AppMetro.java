@@ -9,11 +9,8 @@ import com.logicayrepresentacion.grafos.practicaestaciones.CantidadEstacionesExc
 import com.logicayrepresentacion.grafos.practicaestaciones.Costo;
 import com.logicayrepresentacion.grafos.practicaestaciones.DatosEstacion;
 import com.logicayrepresentacion.grafos.practicaestaciones.Estacion;
-import com.logicayrepresentacion.grafos.practicaestaciones.Grafo;
-import com.logicayrepresentacion.grafos.practicaestaciones.Ruta;
 import static com.logicayrepresentacion.grafos.practicaestaciones.vista.Lienzo.DIAMETRO;
 import java.awt.Graphics;
-import java.awt.HeadlessException;
 import java.awt.geom.Ellipse2D;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -27,21 +24,17 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author 57300
+ * @author win
  */
-public class App extends javax.swing.JFrame {
+public class AppMetro extends javax.swing.JFrame {
 
     private DatosEstacion datosEstacion;
     private int lados = 0;
-    private Costo [][] matrizCostos;
-    private Costo [][] matrizCostosMenores;
-    private String [][] rutas;
-    private Lienzo lienzo1;
+    private Costo[][] matrizCostos;
+    private Costo[][] matrizCostosMenores;
+    private String[][] rutas;
 
-    /**
-     * Creates new form App
-     */
-    public App() {
+    public AppMetro() {
         initComponents();
 
         // Carga los datos de las estaciones leyendo el archivo estaciones.txt
@@ -96,12 +89,12 @@ public class App extends javax.swing.JFrame {
 
         lienzo1.setObjArbol(datosEstacion);
         lienzo1.repaint();
-        
+
         //crear las matrices de costos menores y rutas
-        
         matrizCostos = datosEstacion.getGrafo().convertirMatriz();
         matrizCostosMenores = datosEstacion.getGrafo().menoresCostos(matrizCostos);
         rutas = datosEstacion.getGrafo().rutasCortas(matrizCostosMenores);
+
     }
 
     /**
@@ -113,63 +106,91 @@ public class App extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jFrame1 = new javax.swing.JFrame();
-        jLabel4 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        Rutas = new javax.swing.JButton();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        estacion1 = new javax.swing.JTextField();
-        estacion2 = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        lienzo1 = new com.logicayrepresentacion.grafos.practicaestaciones.vista.Lienzo();
+        jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        estacion1 = new javax.swing.JTextField();
+        estacion2 = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
         estacionInicio = new javax.swing.JTextField();
+        buscarRuta = new javax.swing.JButton();
         EnviarMensaje = new javax.swing.JButton();
-        ReiniciarRuta = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        Reiniciar = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         saveMenuItem = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
 
-        javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
-        jFrame1.getContentPane().setLayout(jFrame1Layout);
-        jFrame1Layout.setHorizontalGroup(
-            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        jFrame1Layout.setVerticalGroup(
-            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(924, 924));
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel4.setText("Mapa de estaciones");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setText("Mapa de Estaciones");
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel1.setText("Rutas");
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        Rutas.setText("Encontrar Ruta");
-        Rutas.addActionListener(new java.awt.event.ActionListener() {
+        javax.swing.GroupLayout lienzo1Layout = new javax.swing.GroupLayout(lienzo1);
+        lienzo1.setLayout(lienzo1Layout);
+        lienzo1Layout.setHorizontalGroup(
+            lienzo1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 559, Short.MAX_VALUE)
+        );
+        lienzo1Layout.setVerticalGroup(
+            lienzo1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 435, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lienzo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lienzo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(100, Short.MAX_VALUE))
+        );
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel2.setText("Rutas");
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel3.setText("Mensajes");
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel4.setText("Reiniciar");
+
+        jLabel8.setText("Estacion Inicial:");
+
+        jLabel9.setText("Estacion Final:");
+
+        estacion1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RutasActionPerformed(evt);
+                estacion1ActionPerformed(evt);
             }
         });
 
-        jLabel7.setText("Estacion Inicial:");
-
-        jLabel8.setText("Estacion Final: ");
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel2.setText("Mensaje");
-
-        jLabel3.setText("Para enviar mensaje, digite la estacion de origen");
+        jLabel10.setText("Para enviar mensaje, digite la estacion de origen: ");
 
         estacionInicio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        buscarRuta.setText("Buscar Ruta");
+        buscarRuta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarRutaActionPerformed(evt);
+            }
+        });
 
         EnviarMensaje.setText("Enviar Mensaje");
         EnviarMensaje.addActionListener(new java.awt.event.ActionListener() {
@@ -178,10 +199,10 @@ public class App extends javax.swing.JFrame {
             }
         });
 
-        ReiniciarRuta.setText("Reiniciar rutas");
-        ReiniciarRuta.addActionListener(new java.awt.event.ActionListener() {
+        Reiniciar.setText("Reiniciar Rutas");
+        Reiniciar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ReiniciarRutaActionPerformed(evt);
+                ReiniciarActionPerformed(evt);
             }
         });
 
@@ -189,87 +210,85 @@ public class App extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(128, 128, 128)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Rutas)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(29, 29, 29)))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(106, 106, 106)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(134, 134, 134)
+                        .addComponent(jLabel8)
+                        .addGap(18, 18, 18)
+                        .addComponent(estacion1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addGap(23, 23, 23)
+                        .addComponent(estacion2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(77, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(156, 156, 156)
+                .addComponent(buscarRuta)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(143, 143, 143))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ReiniciarRuta)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(estacionInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(EnviarMensaje))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(66, 66, 66)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel7)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(estacion1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jLabel8)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(estacion2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                    .addGap(62, 62, 62)
-                                    .addComponent(jLabel1))))))
-                .addContainerGap(30, Short.MAX_VALUE))
+                            .addComponent(Reiniciar)
+                            .addComponent(EnviarMensaje))
+                        .addGap(118, 118, 118))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel10)
+                .addGap(49, 49, 49))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addGap(146, 146, 146))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(estacionInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(110, 110, 110))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(estacion1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
+                    .addComponent(estacion1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
                     .addComponent(estacion2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Rutas)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
+                .addComponent(buscarRuta)
+                .addGap(32, 32, 32)
                 .addComponent(jLabel3)
-                .addGap(20, 20, 20)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(estacionInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(EnviarMensaje)
-                .addGap(133, 133, 133)
-                .addComponent(ReiniciarRuta)
-                .addGap(419, 419, 419))
-        );
-
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 510, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(57, 57, 57)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Reiniciar)
+                .addContainerGap(176, Short.MAX_VALUE))
         );
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("Herramientas");
 
         saveMenuItem.setMnemonic('s');
-        saveMenuItem.setText("Guardar Ubicaciones");
+        saveMenuItem.setText("Guardar");
         saveMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveMenuItemActionPerformed(evt);
@@ -295,29 +314,29 @@ public class App extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(183, 183, 183)
-                        .addComponent(jLabel4))
-                    .addGroup(layout.createSequentialGroup()
+                        .addGap(55, 55, 55)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(43, 43, 43)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(143, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1)
+                        .addGap(228, 228, 228)))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 265, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(618, 618, 618))
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -327,14 +346,59 @@ public class App extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
-    /**
-     * Se utiliza para almacenar las posiciones de las estaciones y poderlas
-     * volver a cargar
-     *
-     * @param evt
-     */
-    private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
+    private void estacion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estacion1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_estacion1ActionPerformed
 
+    private void ReiniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReiniciarActionPerformed
+        // TODO add your handling code here:
+        estacionInicio.setText("");
+        lienzo1.repaint();
+        estacion1.setText("");
+        estacion2.setText("");
+    }//GEN-LAST:event_ReiniciarActionPerformed
+
+    private void buscarRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarRutaActionPerformed
+        // TODO add your handling code here:
+        try {
+            Estacion e1 = datosEstacion.buscar(estacion1.getText());
+            int idE1 = e1.getId();
+            Estacion e2 = datosEstacion.buscar(estacion2.getText());
+            int idE2 = e2.getId();
+
+            String rutaSolicitada = rutas[idE1][idE2];
+            int[][] ruta = datosEstacion.getGrafo().generarRuta(rutaSolicitada, datosEstacion);
+            Graphics g = lienzo1.getGraphics();
+            lienzo1.pintarRuta(g, ruta);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Estaciones no validas");
+            estacion1.setText("");
+            estacion2.setText("");
+        }
+
+
+    }//GEN-LAST:event_buscarRutaActionPerformed
+
+    private void EnviarMensajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EnviarMensajeActionPerformed
+        // TODO add your handling code here:
+        Estacion E1 = datosEstacion.buscar(estacionInicio.getText());
+        int idE = E1.getId();
+        
+        int [][] ruta = datosEstacion.getGrafo().enviarMensaje(rutas, matrizCostosMenores, idE , lados);
+        Graphics metro = lienzo1.getGraphics();
+            for (int i = 0; i < ruta.length; i++) {
+                int e1 = ruta[i][0];
+                int e2 = ruta[i][1];
+                lienzo1.pintarArista(metro,e1 ,e2);
+                JOptionPane.showMessageDialog(null, "La estacion "+datosEstacion.getEstaciones()[e1].getNombre()+" envia mensaje a la estacion "+datosEstacion.getEstaciones()[e2].getNombre());
+            }
+        
+    }//GEN-LAST:event_EnviarMensajeActionPerformed
+
+    private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
+        // TODO add your handling code here:
+        
         BufferedWriter writer = null;
         try {
             writer = new BufferedWriter(new FileWriter("grafico.txt"));
@@ -357,60 +421,6 @@ public class App extends javax.swing.JFrame {
 
     }//GEN-LAST:event_saveMenuItemActionPerformed
 
-    private void ReiniciarRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReiniciarRutaActionPerformed
-        // TODO add your handling code here:
-        estacionInicio.setText("");
-        lienzo1.repaint();
-    }//GEN-LAST:event_ReiniciarRutaActionPerformed
-
-    private void EnviarMensajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EnviarMensajeActionPerformed
-        // TODO add your handling code here:
-
-        try {
-            Estacion estacion = datosEstacion.buscar(estacionInicio.getText());
-            Costo[][] matriz = datosEstacion.getGrafo().convertirMatriz();
-            Costo[][] menores = datosEstacion.getGrafo().menoresCostos(matriz);
-            int numEstacion = estacion.getId();
-
-            /*int[][] ruta = datosEstacion.getGrafo().enviarMensaje(menores, numEstacion, lados);
-            Graphics metro = lienzo1.getGraphics();
-            for (int i = 0; i < ruta.length-1; i++) {
-                int e1 = ruta[i][0];
-                int e2 = ruta[i][1];
-                lienzo1.pintarArista(metro,e1 ,e2);
-                JOptionPane.showMessageDialog(null, "La estacion "+datosEstacion.getEstaciones()[e1].getNombre()+" envia mensaje a la estacion "+datosEstacion.getEstaciones()[e2].getNombre());
-            }*/
-
-        } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(null, "Ingrese una estacion valida para enviar el mensaje");
-            estacionInicio.setText("");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Ingrese una estacion valida para enviar el mensaje");
-            estacionInicio.setText("");
-        }
-
-    }//GEN-LAST:event_EnviarMensajeActionPerformed
-
-    private void RutasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RutasActionPerformed
-        // TODO add your handling code here:
-
-        //seleccionar ruta de matriz rutas cortas
-        Estacion e1 = datosEstacion.buscar(estacion1.getText());
-        int idE1 = e1.getId();
-        Estacion e2 = datosEstacion.buscar(estacion2.getText());
-        int idE2 = e2.getId();
-
-        String rutaSolicitada = rutas[idE1][idE2];
-        System.out.println(rutaSolicitada);
-        //int [][] ruta = datosEstacion.getGrafo().generarRuta(rutaSolicitada);
-        Graphics g = lienzo1.getGraphics();
-        //lienzo1.pintarRuta(g, ruta);
-
-        // Al traer la matriz, ya estan todas la rutas posibles, se podria hacer una sola busqueda como atributo, para que no
-        //lo haga cada vez que se calcule algo y luego validar si son adyacentes para pintar la ruta o solo una arista.
-
-    }//GEN-LAST:event_RutasActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -428,42 +438,43 @@ public class App extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(App.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AppMetro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(App.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AppMetro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(App.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AppMetro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(App.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AppMetro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new App().setVisible(true);
+                new AppMetro().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton EnviarMensaje;
-    private javax.swing.JButton ReiniciarRuta;
-    private javax.swing.JButton Rutas;
+    private javax.swing.JButton Reiniciar;
+    private javax.swing.JButton buscarRuta;
     private javax.swing.JTextField estacion1;
     private javax.swing.JTextField estacion2;
     private javax.swing.JTextField estacionInicio;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
-    private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private com.logicayrepresentacion.grafos.practicaestaciones.vista.Lienzo lienzo1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem saveMenuItem;
     // End of variables declaration//GEN-END:variables
