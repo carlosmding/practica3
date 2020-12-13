@@ -36,7 +36,7 @@ public class Grafo {
         matrizCostos[vj][vi] = distancia;
     }
 
-    public Ruta obtenerRuta(int vi, int vj) {
+    /*public Ruta obtenerRuta(int vi, int vj) {
         Ruta ruta = new Ruta();
 
         Costo[][] costos = new Costo[matrizCostos.length][matrizCostos.length];
@@ -89,7 +89,7 @@ public class Grafo {
         }
         return w;
     }
-
+*/
     public Costo[][] convertirMatriz() {
         Costo[][] matriz = new Costo[matrizCostos.length][matrizCostos.length];
         for (int i = 0; i < matrizCostos.length; i++) {
@@ -234,9 +234,9 @@ public class Grafo {
 
     }
 
-    public int[][] enviarMensaje(String[][] rutas, Costo[][] menores, int estInicio, int lados) {
+    public int[][] enviarMensaje(String[][] rutas, Costo[][] menores, int estInicio, int estaciones) {
         int[] estEnviadas = new int[matrizAdy.length];
-        int[][] ruta = new int[lados-1][2];
+        int[][] ruta = new int[estaciones-1][2];
         int contador = 0;
 
         estEnviadas[estInicio] = -1;

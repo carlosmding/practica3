@@ -366,39 +366,48 @@ public class AppMetro extends javax.swing.JFrame {
             Estacion e2 = datosEstacion.buscar(estacion2.getText());
             int idE2 = e2.getId();
 
-            String rutaSolicitada = rutas[idE1][idE2];
-            int[][] ruta = datosEstacion.getGrafo().generarRuta(rutaSolicitada, datosEstacion);
-            Graphics g = lienzo1.getGraphics();
-            lienzo1.pintarRuta(g, ruta);
-
+            if (idE1 != idE2) {
+                String rutaSolicitada = rutas[idE1][idE2];
+                int[][] ruta = datosEstacion.getGrafo().generarRuta(rutaSolicitada, datosEstacion);
+                Graphics g = lienzo1.getGraphics();
+                lienzo1.pintarRuta(g, ruta);
+            } else {
+                JOptionPane.showMessageDialog(null, "No hay ruta por mostrar, la estacion es la misma, ingrese estaciones diferentes");
+                estacion1.setText("");
+                estacion2.setText("");
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Estaciones no validas");
             estacion1.setText("");
             estacion2.setText("");
         }
-
-
     }//GEN-LAST:event_buscarRutaActionPerformed
 
     private void EnviarMensajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EnviarMensajeActionPerformed
         // TODO add your handling code here:
-        Estacion E1 = datosEstacion.buscar(estacionInicio.getText());
-        int idE = E1.getId();
-        
-        int [][] ruta = datosEstacion.getGrafo().enviarMensaje(rutas, matrizCostosMenores, idE , lados);
-        Graphics metro = lienzo1.getGraphics();
+
+        try {
+            Estacion E1 = datosEstacion.buscar(estacionInicio.getText());
+            int idE = E1.getId();
+
+            int[][] ruta = datosEstacion.getGrafo().enviarMensaje(rutas, matrizCostosMenores, idE, lados);
+            Graphics metro = lienzo1.getGraphics();
             for (int i = 0; i < ruta.length; i++) {
                 int e1 = ruta[i][0];
                 int e2 = ruta[i][1];
-                lienzo1.pintarArista(metro,e1 ,e2);
-                JOptionPane.showMessageDialog(null, "La estacion "+datosEstacion.getEstaciones()[e1].getNombre()+" envia mensaje a la estacion "+datosEstacion.getEstaciones()[e2].getNombre());
+                lienzo1.pintarArista(metro, e1, e2);
+                JOptionPane.showMessageDialog(null, "La estacion " + datosEstacion.getEstaciones()[e1].getNombre() + " envia mensaje a la estacion " + datosEstacion.getEstaciones()[e2].getNombre());
             }
-        
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ingrese una estacion valida");
+        }
+
     }//GEN-LAST:event_EnviarMensajeActionPerformed
 
     private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
         // TODO add your handling code here:
-        
+
         BufferedWriter writer = null;
         try {
             writer = new BufferedWriter(new FileWriter("grafico.txt"));
