@@ -60,6 +60,7 @@ public class App extends javax.swing.JFrame {
                 int distancia = Integer.parseInt(partes[2]);
                 datosEstacion.addAdyacencia(ciudad1, ciudad2, distancia);
                 lados++;
+                System.out.println("Hola");
             }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
