@@ -30,6 +30,7 @@ public class AppMetro extends javax.swing.JFrame {
 
     private DatosEstacion datosEstacion;
     private int lados = 0;
+    private int mayorCosto =0;
     private Costo[][] matrizCostos;
     private Costo[][] matrizCostosMenores;
     private String[][] rutas;
@@ -53,6 +54,9 @@ public class AppMetro extends javax.swing.JFrame {
                 int distancia = Integer.parseInt(partes[2]);
                 datosEstacion.addAdyacencia(ciudad1, ciudad2, distancia);
                 lados++;
+                if(distancia > mayorCosto){
+                    mayorCosto = distancia;
+                }
             }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
@@ -365,12 +369,16 @@ public class AppMetro extends javax.swing.JFrame {
             int idE1 = e1.getId();
             Estacion e2 = datosEstacion.buscar(estacion2.getText());
             int idE2 = e2.getId();
-
+            
+            int distancia = matrizCostosMenores[idE1][idE2].getValor();
+            
             if (idE1 != idE2) {
                 String rutaSolicitada = rutas[idE1][idE2];
                 int[][] ruta = datosEstacion.getGrafo().generarRuta(rutaSolicitada, datosEstacion);
                 Graphics g = lienzo1.getGraphics();
                 lienzo1.pintarRuta(g, ruta);
+                JOptionPane.showMessageDialog(null, "La ruta mas corta tiene "+distancia+" km");
+    
             } else {
                 JOptionPane.showMessageDialog(null, "No hay ruta por mostrar, la estacion es la misma, ingrese estaciones diferentes");
                 estacion1.setText("");
@@ -390,7 +398,7 @@ public class AppMetro extends javax.swing.JFrame {
             Estacion E1 = datosEstacion.buscar(estacionInicio.getText());
             int idE = E1.getId();
 
-            int[][] ruta = datosEstacion.getGrafo().enviarMensaje(rutas, matrizCostosMenores, idE, lados);
+            int[][] ruta = datosEstacion.getGrafo().enviarMensaje(matrizCostosMenores, idE, lados, mayorCosto);
             Graphics metro = lienzo1.getGraphics();
             for (int i = 0; i < ruta.length; i++) {
                 int e1 = ruta[i][0];

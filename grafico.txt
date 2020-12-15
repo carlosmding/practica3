@@ -1,5 +1,13 @@
-Madera,110.0,60.0
-Bello,274.0,117.0
-Niquia,389.0,153.0
-America,205.0,394.0
-Poblado,63.0,244.0
+Rosal,25.0,189.0
+Estrella,18.0,416.0
+Bello,266.0,61.0
+Niquia,488.0,38.0
+San Javier,151.0,121.0
+Universidad,273.0,183.0
+Acevedo,252.0,331.0
+Industriales,458.0,427.0
+Caribe,428.0,94.0
+Suramericana,409.0,206.0
+Beto,113.0,358.0
+Kill,93.0,47.0
+Gato,173.0,214.0

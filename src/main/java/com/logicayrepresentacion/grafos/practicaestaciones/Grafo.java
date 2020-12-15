@@ -89,7 +89,7 @@ public class Grafo {
         }
         return w;
     }
-*/
+     */
     public Costo[][] convertirMatriz() {
         Costo[][] matriz = new Costo[matrizCostos.length][matrizCostos.length];
         for (int i = 0; i < matrizCostos.length; i++) {
@@ -137,8 +137,7 @@ public class Grafo {
     }
 
     //Usando el algoritmo de Floyd al encontrar un valor menor, significa que debe pasar por la estacion k.
-    
-    public String[][] rutasCortas(Costo[][] menoresCostos) { 
+    public String[][] rutasCortas(Costo[][] menoresCostos) {
         String[][] caminos = new String[menoresCostos.length][menoresCostos.length];
         int n = menoresCostos.length;
 
@@ -234,43 +233,51 @@ public class Grafo {
 
     }
 
-    public int[][] enviarMensaje(String[][] rutas, Costo[][] menores, int estInicio, int estaciones) {
+    public int[][] enviarMensaje(Costo[][] menores, int estInicio, int estaciones, int costoMayor) {
         int[] estEnviadas = new int[matrizAdy.length];
-        int[][] ruta = new int[estaciones-1][2];
+        int[][] ruta = new int[estaciones - 1][2];
         int contador = 0;
+        int menor = costoMayor;
+        int idmenor = estInicio;
+        int adyacente = estInicio;
 
-        estEnviadas[estInicio] = -1;
+        estEnviadas[estInicio] = 1;
 
-        //Enviados desde el inicio, reglas de los triangulos
-        for (int i = 0; i < matrizAdy.length; i++) { 
-            if (matrizAdy[estInicio][i] == 1) {
-                ruta[contador][0] = estInicio;
-                ruta[contador][1] = i;
-                estEnviadas[i] = 1;
-                contador++;
+        //Ruta de menor costo desde origen
+        for (int i = 0; i < estEnviadas.length; i++) {
+            if (menores[estInicio][i].getValor() < menor && !menores[estInicio][i].isInfinito()) {
+                menor = menores[estInicio][i].getValor();
+                idmenor = i;
             }
         }
+        ruta[contador][0] = estInicio;
+        ruta[contador][1] = idmenor;
+        estEnviadas[idmenor] = 1;
+        contador++;
+        menor = costoMayor;
 
-        //Enviar desde estaciones que ya tiene mensaje
+        //
         boolean finaliza = mensajeTransmitido(estEnviadas);
         while (finaliza) {
-            for (int i = 0; i < matrizAdy.length; i++) {
-                if (estEnviadas[i] == 0) {
-                    for (int j = 0; j < menores.length; j++) {
-                        if (matrizAdy[i][j] == 1 && estEnviadas[j] == 1) {
-                            if (matrizCostos[i][j] == menores[i][j].getValor() && estEnviadas[i]==0) {
-                                ruta[contador][0] = j;
-                                ruta[contador][1] = i;
-                                estEnviadas[i]=1;
-                                contador++;
-                            }
+            for (int i = 0; i < estEnviadas.length; i++) {
+                if (estEnviadas[i] == 1) {
+                    for (int j = 0; j < estEnviadas.length; j++) {
+                        if (menores[i][j].getValor() < menor && !menores[i][j].isInfinito() && estEnviadas[j] == 0) {
+                            menor = menores[i][j].getValor();
+                            adyacente = i;
+                            idmenor = j;
                         }
                     }
-
                 }
             }
+            ruta[contador][0] = adyacente;
+            ruta[contador][1] = idmenor;
+            estEnviadas[idmenor] = 1;
+            contador++;
             finaliza = mensajeTransmitido(estEnviadas);
+            menor = costoMayor;
         }
+
         return ruta;
     }
 
@@ -341,5 +348,5 @@ public class Grafo {
         }
         return camino;
     }
-*/
+     */
 }

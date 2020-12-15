@@ -1,6 +1,16 @@
-5
-Madera,Bello,5
-Bello,Niquia,3
-Niquia,America,15
-America,Poblado,10
-Poblado,Bello,13
+13
+Rosal,Estrella,5
+Bello,Niquia,7
+San Javier,Universidad,12
+Acevedo,Industriales,15
+Caribe,Suramericana,20
+Niquia,Industriales,9
+Suramericana,Bello,16
+Rosal,San Javier,8
+Industriales,Bello,4
+Estrella,Industriales,10
+Industriales,Suramericana,13
+Beto,Acevedo,5
+Kill,Rosal,8
+Gato,Rosal,16
+Gato,Acevedo,78
