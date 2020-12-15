@@ -48,7 +48,7 @@ public class DatosEstacion {
         return actual;
     }
 
-    public static int getSIGUIENTE_ID() {
+    public int getSIGUIENTE_ID() {
         return SIGUIENTE_ID;
     }
 

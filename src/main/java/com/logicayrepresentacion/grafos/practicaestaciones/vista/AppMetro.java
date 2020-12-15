@@ -29,7 +29,6 @@ import javax.swing.JOptionPane;
 public class AppMetro extends javax.swing.JFrame {
 
     private DatosEstacion datosEstacion;
-    private int lados = 0;
     private int mayorCosto =0;
     private Costo[][] matrizCostos;
     private Costo[][] matrizCostosMenores;
@@ -53,7 +52,6 @@ public class AppMetro extends javax.swing.JFrame {
                 String ciudad2 = partes[1];
                 int distancia = Integer.parseInt(partes[2]);
                 datosEstacion.addAdyacencia(ciudad1, ciudad2, distancia);
-                lados++;
                 if(distancia > mayorCosto){
                     mayorCosto = distancia;
                 }
@@ -398,7 +396,7 @@ public class AppMetro extends javax.swing.JFrame {
             Estacion E1 = datosEstacion.buscar(estacionInicio.getText());
             int idE = E1.getId();
 
-            int[][] ruta = datosEstacion.getGrafo().enviarMensaje(matrizCostosMenores, idE, lados, mayorCosto);
+            int[][] ruta = datosEstacion.getGrafo().enviarMensaje(matrizCostosMenores, idE, datosEstacion.getSIGUIENTE_ID(), mayorCosto);
             Graphics metro = lienzo1.getGraphics();
             for (int i = 0; i < ruta.length; i++) {
                 int e1 = ruta[i][0];
